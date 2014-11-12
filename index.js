@@ -16,6 +16,7 @@
 
 var config = require('./config');
 var childProcess = require('child_process');
+var path = require('path');
 
 exports.loadConfig = config.loadConfig;
 exports.config = config;
