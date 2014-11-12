@@ -24,9 +24,9 @@ exports.get = function* () {
   //   GROUP BY TABLE_NAME \
   //   ORDER BY data_length DESC \
   //   LIMIT 0, 200';
-  var TOTAL_MODULE_SQL = 'SELECT count(distinct(name)) AS count FROM `module`;';
-  var TOTAL_VERSION_SQL = 'SELECT count(name) AS count FROM `module`;';
-  var TOTAL_USER_SQL = 'SELECT count(name) AS count FROM `user`;';
+  var TOTAL_MODULE_SQL = 'SELECT count(distinct(name)) AS count FROM "module";';
+  var TOTAL_VERSION_SQL = 'SELECT count(name) AS count FROM "module";';
+  var TOTAL_USER_SQL = 'SELECT count(name) AS count FROM "user";';
   var rs = yield [
     // models.query(DB_SIZE_SQL, [config.db]),
     models.queryOne(TOTAL_MODULE_SQL),
