@@ -38,7 +38,7 @@ module.exports = function (sequelize, DataTypes) {
       comment: 'module name',
     },
     count: {
-      type: DataTypes.BIGINT(20).UNSIGNED,
+      type: DataTypes.BIGINT,
       allowNull: false,
       defaultValue: 0,
       comment: 'download count',

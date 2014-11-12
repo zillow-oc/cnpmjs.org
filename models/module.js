@@ -73,12 +73,12 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
     },
     dist_size: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.BIGINT,
       allowNull: false,
       defaultValue: 0,
     },
     publish_time: {
-      type: DataTypes.BIGINT(20).UNSIGNED,
+      type: DataTypes.BIGINT,
       allowNull: true,
     }
   }, {
