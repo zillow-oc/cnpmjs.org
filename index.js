@@ -30,9 +30,9 @@ exports.startSync = function (customConfig) {
   require('./sync');
 };
 
-exports.initDb = function(customConfig){
+exports.initDb = function(customConfig, force){
   config.loadConfig(customConfig);
-  var cmd = ['node', '--harmony', initscript, 'true', config.database.dialect].join(' ');
+  var cmd = ['node', '--harmony', initscript, force, config.database.dialect].join(' ');
   var stdout = childProcess.execSync(cmd);
   process.stdout.write(stdout);
 }
