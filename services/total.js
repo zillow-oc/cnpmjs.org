@@ -90,22 +90,22 @@ exports.getTotalInfo = function* () {
 };
 
 exports.plusDeleteModule = function* () {
-  var sql = 'UPDATE total SET module_delete=module_delete+1 WHERE name="total"';
+  var sql = "UPDATE total SET module_delete=module_delete+1 WHERE name='total'";
   return yield* models.query(sql);
 };
 
 exports.setLastSyncTime = function* (time) {
-  var sql = 'UPDATE total SET last_sync_time=? WHERE name="total"';
+  var sql = "UPDATE total SET last_sync_time=? WHERE name='total'";
   return yield* models.query(sql, [Number(time)]);
 };
 
 exports.setLastExistSyncTime = function* (time) {
-  var sql = 'UPDATE total SET last_exist_sync_time=? WHERE name="total"';
+  var sql = "UPDATE total SET last_exist_sync_time=? WHERE name='total'";
   return yield* models.query(sql, [Number(time)]);
 };
 
 exports.updateSyncStatus = function* (status) {
-  var sql = 'UPDATE total SET sync_status=? WHERE name="total"';
+  var sql = "UPDATE total SET sync_status=? WHERE name='total'";
   return yield* models.query(sql, [status]);
 };
 
@@ -118,6 +118,6 @@ exports.updateSyncNum = function* (params) {
     left_sync_num: params.left || 0,
     last_sync_module: params.lastSyncModule
   };
-  var sql = 'UPDATE total SET ? WHERE name="total"';
+  var sql = "UPDATE total SET ? WHERE name='total'";
   return yield* models.query(sql, [arg]);
 };

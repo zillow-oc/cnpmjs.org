@@ -599,8 +599,8 @@ exports.search = function* (word, options) {
   // 3. keyword equal search
   var ids = {};
 
-  var sql = 'SELECT module_id FROM tag WHERE LOWER(name) LIKE LOWER(?) AND tag="latest" \
-    ORDER BY name LIMIT ?;';
+  var sql = "SELECT module_id FROM tag WHERE LOWER(name) LIKE LOWER(?) AND tag='latest' \
+    ORDER BY name LIMIT ?;";
   var rows = yield* models.query(sql, [word + '%', limit ]);
   for (var i = 0; i < rows.length; i++) {
     ids[rows[i].module_id] = 1;
