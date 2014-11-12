@@ -330,7 +330,7 @@ SyncModuleWorker.prototype.next = function* (concurrencyId) {
 };
 
 function* _listStarUsers(modName) {
-  var users = yield packageService.listStarUserNames(modName);
+  var users = yield* packageService.listStarUserNames(modName);
   var userMap = {};
   users.forEach(function (user) {
     userMap[user] = true;
@@ -474,6 +474,7 @@ SyncModuleWorker.prototype._sync = function* (name, pkg) {
     for (var i = 0; i < pkgMaintainers.length; i++) {
       var item = pkgMaintainers[i];
       originalMap[item.name] = item;
+      npmUsernames[item.name.toLowerCase()] = 1;
     }
 
     // find add users
@@ -543,13 +544,8 @@ SyncModuleWorker.prototype._sync = function* (name, pkg) {
     if (!version.maintainers || !version.maintainers[0]) {
       version.maintainers = pkg.maintainers;
     }
-    var sourceAuthor = version.maintainers && version.maintainers[0] &&
-      version.maintainers[0].name || exists.author;
-
     if (exists.package &&
-        exists.package.dist.shasum === version.dist.shasum &&
-        exists.author === sourceAuthor) {
-      // * author make sure equal
+        exists.package.dist.shasum === version.dist.shasum) {
       // * shasum make sure equal
       if ((version.publish_time === exists.publish_time) ||
           (!version.publish_time && exists.publish_time)) {
