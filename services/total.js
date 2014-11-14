@@ -118,6 +118,8 @@ exports.updateSyncNum = function* (params) {
     left_sync_num: params.left || 0,
     last_sync_module: params.lastSyncModule
   };
-  var sql = "UPDATE total SET ? WHERE name='total'";
-  return yield* models.query(sql, [arg]);
+  var sql = "UPDATE total SET sync_status=:sync_status, need_sync_num=:need_sync_num, "
+    + "success_sync_num=:success_sync_num, fail_sync_num=:fail_sync_num, "
+    + "left_sync_num=:left_sync_num, last_sync_module=:last_sync_module WHERE name='total'";
+  return yield* models.query(sql, arg);
 };
