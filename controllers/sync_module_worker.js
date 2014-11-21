@@ -49,7 +49,7 @@ function SyncModuleWorker(options) {
     options.name = [options.name];
   }
 
-  this.nfsPackages = [options.nfsPackages];
+  this.nfsPackages = options.nfsPackages;
 
   this.names = options.name;
   this.startName = this.names[0];
@@ -910,46 +910,51 @@ SyncModuleWorker.prototype._syncOneVersion = function *(versionIndex, sourcePack
     }
 
     // read and check
+    var rs = fs.createReadStream(filepath);
+    rs.on('data', function (data) {
+      shasum.update(data);
+      dataSize += data.length;
+    });
+    var end = thunkify.event(rs);
+    yield end(); // after end event emit
+
+    if (dataSize === 0) {
+      var err = new Error('Download ' + downurl + ' file size is zero');
+      err.name = 'DownloadTarballSizeZeroError';
+      err.data = sourcePackage;
+      throw err;
+    }
+
+    // check shasum
+    shasum = shasum.digest('hex');
+    if (shasum !== sourcePackage.dist.shasum) {
+      var err = new Error('Download ' + downurl + ' shasum:' + shasum +
+        ' not match ' + sourcePackage.dist.shasum);
+      err.name = 'DownloadTarballShasumError';
+      err.data = sourcePackage;
+      throw err;
+    }
+
+    options = {
+      key: common.getCDNKey(sourcePackage.name, filename),
+      size: dataSize,
+      shasum: shasum
+    };
     var result;
-    if(that.nfsPackages.length > 0 
-      && that.nfsPackages[0][common.getCDNKey(sourcePackage.name, filename).replace(/\//g, '-').replace(/\\/g, '_')]){
-      that.log('Found ' + common.getCDNKey(sourcePackage.name, filename) + ' in your CDN, Continue...');
-      result = {
-        key: that.nfsPackages[filepath]
-      }
-    }else{
-      var rs = fs.createReadStream(filepath);
-      rs.on('data', function (data) {
-        shasum.update(data);
-        dataSize += data.length;
-      });
-      var end = thunkify.event(rs);
-      yield end(); // after end event emit
 
-      if (dataSize === 0) {
-        var err = new Error('Download ' + downurl + ' file size is zero');
-        err.name = 'DownloadTarballSizeZeroError';
-        err.data = sourcePackage;
-        throw err;
-      }
-
-      // check shasum
-      shasum = shasum.digest('hex');
-      if (shasum !== sourcePackage.dist.shasum) {
-        var err = new Error('Download ' + downurl + ' shasum:' + shasum +
-          ' not match ' + sourcePackage.dist.shasum);
-        err.name = 'DownloadTarballShasumError';
-        err.data = sourcePackage;
-        throw err;
-      }
-
-      options = {
-        key: common.getCDNKey(sourcePackage.name, filename),
-        size: dataSize,
-        shasum: shasum
-      };
+    //this is only for s3-cnpm
+    var isNfs = true;    
+    if(that.nfsPackages){
+      var name = common.getCDNKey(sourcePackage.name, filename).replace(/\//g, '-').replace(/\\/g, '_');
+      if(that.nfsPackages[name]){
+        that.log('Found ' + common.getCDNKey(sourcePackage.name, filename) + ' in your CDN, Continue...');
+        result = {
+          key: that.nfsPackages[name]
+        }
+      }else isNfs = false;
+    }else isNfs = false;
+    if(!isNfs){
       // upload to NFS
-      
       result = yield nfs.upload(filepath, options);
     }
     return yield *afterUpload(result);
