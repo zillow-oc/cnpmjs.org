@@ -50,7 +50,7 @@ module.exports = function (sequelize, DataTypes) {
       comment: '02-May-2014 01:06'
     },
     size: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false,
       defaultValue: 0,
       comment: 'file size'

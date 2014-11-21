@@ -23,6 +23,7 @@ var npmService = require('../services/npm');
 var packageService = require('../services/package');
 var totalService = require('../services/total');
 var Status = require('./status');
+var nfs = require('../common/nfs');
 var SyncModuleWorker = require('../controllers/sync_module_worker');
 
 function intersection(arrOne, arrTwo) {
@@ -49,31 +50,22 @@ module.exports = function* sync() {
     throw new Error('can not found total info');
   }
 
-  var allPackages;
-  if (!info.last_exist_sync_time) {
-    var pkgs = yield* npmService.getShort();
-    debug('First time sync all packages from official registry, got %d packages', pkgs.length);
-    if (info.last_sync_module) {
-      // start from last success
-      var lastIndex = pkgs.indexOf(info.last_sync_module);
-      if (lastIndex > 0) {
-        pkgs = pkgs.slice(lastIndex);
-        debug('recover from %d: %s', lastIndex, info.last_sync_module);
-      }
-    }
-    allPackages = pkgs;
-  } else {
-    debug('sync new module from last exist sync time: %s', info.last_sync_time);
-    var data = yield* npmService.getAllSince(info.last_exist_sync_time - ms('10m'));
-    if (!data) {
-      allPackages = [];
-    }
-    if (data._updated) {
-      syncTime = data._updated;
-      delete data._updated;
-    }
-    allPackages = Object.keys(data);
+  var allPackages,nfsPackages;
+  if(info.last_exist_sync_time < new Date('1/1/2001')
+    && nfs.listAll){
+    nfsPackages = yield nfs.listAll();
   }
+
+  debug('sync new module from last exist sync time: %s', info.last_exist_sync_time);
+  var data = yield* npmService.getAllSince(info.last_exist_sync_time - ms('10m'));
+  if (!data) {
+    allPackages = [];
+  }
+  if (data._updated) {
+    syncTime = data._updated;
+    delete data._updated;
+  }
+  allPackages = Object.keys(data);
 
   var packages = intersection(existPackages, allPackages);
   if (!packages.length) {
@@ -85,11 +77,13 @@ module.exports = function* sync() {
   }
   debug('Total %d packages to sync', packages.length);
 
+
   var worker = new SyncModuleWorker({
     username: 'admin',
     name: packages,
     concurrency: config.syncConcurrency,
     syncUpstreamFirst: false,
+    nfsPackages: nfsPackages
   });
   Status.init({need: packages.length}, worker);
   worker.start();

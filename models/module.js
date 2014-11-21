@@ -43,12 +43,12 @@ CREATE INDEX `module_author` ON `module` (`author`);
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('Module', {
     author: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'first maintainer name'
     },
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'module name'
     },
@@ -73,12 +73,12 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
     },
     dist_size: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
     },
     publish_time: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.DATE,
       allowNull: true,
     }
   }, {

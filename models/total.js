@@ -35,26 +35,26 @@
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('Total', {
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       primaryKey: true,
       comment: 'total name'
     },
     module_delete: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
       comment: 'module delete count',
     },
     last_sync_time: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: '1/1/2000',
       comment: 'last timestamp sync from official registry',
     },
     last_exist_sync_time: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: '1/1/2000',
       comment: 'last timestamp sync exist packages from official registry',
     },
     sync_status: {
@@ -70,25 +70,25 @@ module.exports = function (sequelize, DataTypes) {
       comment: 'how many packages need to be sync',
     },
     success_sync_num: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false,
       defaultValue: 0,
       comment: 'how many packages sync success at this time',
     },
     fail_sync_num: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false,
       defaultValue: 0,
       comment: 'how many packages sync fail at this time',
     },
     left_sync_num: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false,
       defaultValue: 0,
       comment: 'how many packages left to be sync',
     },
     last_sync_module: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: true,
       comment: 'last sync success module name',
     },

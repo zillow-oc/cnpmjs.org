@@ -95,16 +95,19 @@ exports.plusDeleteModule = function* () {
 };
 
 exports.setLastSyncTime = function* (time) {
+  var time = new Date(Number(time));
   var sql = "UPDATE total SET last_sync_time=? WHERE name='total'";
-  return yield* models.query(sql, [Number(time)]);
+  return yield* models.query(sql, [time]);
 };
 
 exports.setLastExistSyncTime = function* (time) {
+  var time = new Date(Number(time));
   var sql = "UPDATE total SET last_exist_sync_time=? WHERE name='total'";
-  return yield* models.query(sql, [Number(time)]);
+  return yield* models.query(sql, [time]);
 };
 
 exports.updateSyncStatus = function* (status) {
+  console.log('Status:', status);
   var sql = "UPDATE total SET sync_status=? WHERE name='total'";
   return yield* models.query(sql, [status]);
 };

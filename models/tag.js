@@ -47,7 +47,7 @@ module.exports = function (sequelize, DataTypes) {
       comment: 'module version',
     },
     module_id: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.INTEGER,
       allowNull: false,
       comment: 'module id'
     }
