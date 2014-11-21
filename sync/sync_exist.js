@@ -51,21 +51,31 @@ module.exports = function* sync() {
   }
 
   var allPackages,nfsPackages;
-  if(info.last_exist_sync_time < new Date('1/1/2001')
-    && nfs.listAll){
+  if (!info.last_exist_sync_time || info.last_exist_sync_time < new Date('1/1/2001')) {
     nfsPackages = yield nfs.listAll();
+    var pkgs = yield* npmService.getShort();
+    debug('First time sync all packages from official registry, got %d packages', pkgs.length);
+    if (info.last_sync_module) {
+      // start from last success
+      var lastIndex = pkgs.indexOf(info.last_sync_module);
+      if (lastIndex > 0) {
+        pkgs = pkgs.slice(lastIndex);
+        debug('recover from %d: %s', lastIndex, info.last_sync_module);
+      }
+    }
+    allPackages = pkgs;
+  } else {
+    debug('sync new module from last exist sync time: %s', info.last_exist_sync_time);
+    var data = yield* npmService.getAllSince(info.last_exist_sync_time - ms('10m'));
+    if (!data) {
+      allPackages = [];
+    }
+    if (data._updated) {
+      syncTime = data._updated;
+      delete data._updated;
+    }
+    allPackages = Object.keys(data);
   }
-
-  debug('sync new module from last exist sync time: %s', info.last_exist_sync_time);
-  var data = yield* npmService.getAllSince(info.last_exist_sync_time - ms('10m'));
-  if (!data) {
-    allPackages = [];
-  }
-  if (data._updated) {
-    syncTime = data._updated;
-    delete data._updated;
-  }
-  allPackages = Object.keys(data);
 
   var packages = intersection(existPackages, allPackages);
   if (!packages.length) {
