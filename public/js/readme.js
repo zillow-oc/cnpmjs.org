@@ -36,7 +36,7 @@ $(function () {
     $('#success-sync').html(data.success_sync_num);
     $('#fail-sync').html(data.fail_sync_num);
     $('#left-sync').html(data.left_sync_num);
-    $('#percent-sync').html(Math.floor(data.success_sync_num / data.need_sync_num * 100));
+    $('#percent-sync').html(Math.floor((+data.success_sync_num / (+data.need_sync_num  + +data.left_sync_num)) * 100));
     $('#last-success-name').html('<a target="_blank" href="/package/' + data.last_sync_module + '">' +
       data.last_sync_module + '</a>');
 
