@@ -549,7 +549,11 @@ SyncModuleWorker.prototype._sync = function* (name, pkg) {
     if (exists.package &&
         exists.package.dist.shasum === version.dist.shasum) {
       // * shasum make sure equal
-      if ((version.publish_time === exists.publish_time) ||
+      var timeTest = false;
+      if(version.publish_time && exists.publish_time){
+        timeTest = ((new Date(version.publish_time)).getTime() === (new Date(exists.publish_time)).getTime());
+      }
+      if ((timeTest) ||
           (!version.publish_time && exists.publish_time)) {
         // debug('  [%s] %s publish_time equal: %s, %s',
         //   name, version.version, version.publish_time, exists.publish_time);
