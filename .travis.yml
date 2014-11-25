@@ -5,13 +5,18 @@ node_js:
 addons:
   postgresql: "9.3"
 
+env:
+  - DB=mysql
+  - DB=postgres
+  - DB=sqlite
+
 before_install: "npm install --build-from-source"
 
 before_script:
   - "mysql -e 'create database cnpmjs_test;'"
   - "psql -c 'create database cnpmjs_test;' -U root"
 
-script: "make test-travis-all"
+script: "make test-travis"
 
 
 matrix:
