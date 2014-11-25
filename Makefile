@@ -1,9 +1,9 @@
 TESTS = $(shell ls -S `find test -type f -name "*.test.js" -print`)
-REPORTER = spec
+REPORTER ?= spec
 TIMEOUT = 30000
 MOCHA_OPTS =
 REGISTRY = --registry=https://registry.npm.taobao.org
-DB = sqlite
+DB ?= sqlite
 
 install:
 	@npm install --build-from-source $(REGISTRY) \
