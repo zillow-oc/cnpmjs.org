@@ -14,7 +14,7 @@ before_install: "npm install --build-from-source"
 
 before_script:
   - "mysql -e 'create database cnpmjs_test;'"
-  - "psql -c 'create database cnpmjs_test;' -U root"
+  - "psql -c 'create database cnpmjs_test;' -U postgres"
 
 script: "make test-travis"
 

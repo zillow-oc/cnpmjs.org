@@ -1,8 +1,8 @@
 module.exports = {
   database: {
     db: 'cnpmjs_test',
-    username: 'root',
-    password: '',
+    username: 'postgres',
+    password: 'postgres',
 
     // the sql dialect of the database
     // - currently supported: 'mysql', 'sqlite', 'postgres', 'mariadb'
