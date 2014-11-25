@@ -39,13 +39,13 @@ test: install init-database
 		$(TESTS)
 
 test-sqlite:
-	@$(MAKE) test @DB=sqlite
+	@$(MAKE) test DB=sqlite
 
 test-mysql: init-mysql
-	@$(MAKE) test @DB=mysql
+	@$(MAKE) test DB=mysql
 
 test-postgres: init-postgres
-	@$(MAKE) test @DB=postgres
+	@$(MAKE) test DB=postgres
 
 test-all: test-sqlite test-mysql
 

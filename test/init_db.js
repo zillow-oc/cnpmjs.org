@@ -24,7 +24,7 @@ var cnpm = require('..');
 
 function initDb(){
   return function(cb){
-    console.log(process.env.DB);
+    console.log(process.env);
     cnpm.initDb(require('./config/' + process.env.DB + '.js'), true, function(){
       cb();
     });
