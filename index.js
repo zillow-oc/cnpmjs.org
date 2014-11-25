@@ -31,7 +31,7 @@ exports.startSync = function (customConfig) {
   require('./sync');
 };
 
-exports.initDb = function(customConfig, force){
+exports.initDb = function(customConfig, force, done){
   config.loadConfig(customConfig);
-  require('./models/init_script.js')(force); 
+  require('./models/init_script.js')(force, done);
 }

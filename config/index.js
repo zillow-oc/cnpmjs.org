@@ -144,7 +144,7 @@ var config = {
     // default store into ~/cnpmjs.org.sqlite
     storage: path.join(process.env.HOME || root, 'cnpmjs.org.sqlite'),
 
-    logging: !!process.env.SQL_DEBUG,
+    logging: !!process.env.SQL_DEBUG
   },
 
   // redis config

@@ -48,13 +48,13 @@ module.exports = function (sequelize, DataTypes) {
     last_sync_time: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: '1/1/2000',
+      defaultValue: '2000-1-1',
       comment: 'last timestamp sync from official registry',
     },
     last_exist_sync_time: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: '1/1/2000',
+      defaultValue: '2000-1-1',
       comment: 'last timestamp sync exist packages from official registry',
     },
     sync_status: {

@@ -22,6 +22,10 @@ init-mysql:
 	@mysql -uroot -e 'DROP DATABASE IF EXISTS cnpmjs_test;'
 	@mysql -uroot -e 'CREATE DATABASE cnpmjs_test;'
 
+init-postgres:
+	@dropdb cnpmjs_test;
+	@createdb -U root cnpmjs_test; 
+
 test: install init-database
 	@NODE_ENV=test DB=${DB} node_modules/.bin/mocha \
 		--harmony \
@@ -39,6 +43,9 @@ test-sqlite:
 
 test-mysql: init-mysql
 	@$(MAKE) test DB=mysql
+
+test-postgres: init-postgres
+	@$(MAKE) test DB=postgres
 
 test-all: test-sqlite test-mysql
 
@@ -81,10 +88,13 @@ test-travis: install init-database
 test-travis-sqlite:
 	@$(MAKE) test-travis DB=sqlite
 
-test-travis-mysql: init-mysql
+test-travis-mysql:
 	@$(MAKE) test-travis DB=mysql
 
-test-travis-all: test-travis-sqlite test-travis-mysql
+test-travis-postgres:
+	@$(MAKE) test-travis DB=postgres
+
+test-travis-all: test-travis-sqlite test-travis-mysql test-travis-postgres
 
 dev:
 	@NODE_ENV=development node_modules/.bin/node-dev --harmony dispatch.js

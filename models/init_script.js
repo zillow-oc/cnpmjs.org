@@ -25,11 +25,19 @@ config.database.logging = console.log;
 //   config.database.dialect = dialect;
 // }
 
+console.log('made it');
+
 var models = require('./');
 
-module.exports = function(force){
+console.log('made it2');
+
+module.exports = function(force, done){
+console.log('made it3');
+
   models.sequelize.sync({ force: force })
   .then(function () {
+console.log('made it4');
+
     models.Total.init(function (err) {
       if (err) {
         console.error('[models/init_script.js] sequelize init fail');
@@ -38,7 +46,8 @@ module.exports = function(force){
       } else {
         console.log('[models/init_script.js] `%s` sequelize sync and init success',
           config.database.dialect);
-        process.exit(0);
+
+        if(done) done();
       }
     });
   })
