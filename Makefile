@@ -27,7 +27,7 @@ init-postgres:
 	@createdb -U root cnpmjs_test; 
 
 test: install init-database
-	@NODE_ENV=test DB=${DB} node_modules/.bin/mocha \
+	@NODE_ENV=test node_modules/.bin/mocha \
 		--harmony \
 		--reporter $(REPORTER) \
 		--timeout $(TIMEOUT) \
@@ -39,18 +39,18 @@ test: install init-database
 		$(TESTS)
 
 test-sqlite:
-	@$(MAKE) test DB=sqlite
+	@$(MAKE) test @DB=sqlite
 
 test-mysql: init-mysql
-	@$(MAKE) test DB=mysql
+	@$(MAKE) test @DB=mysql
 
 test-postgres: init-postgres
-	@$(MAKE) test DB=postgres
+	@$(MAKE) test @DB=postgres
 
 test-all: test-sqlite test-mysql
 
 test-cov cov: install init-database
-	@NODE_ENV=test DB=${DB} node --harmony \
+	@NODE_ENV=test node --harmony \
 		node_modules/.bin/istanbul cover --preserve-comments \
 		node_modules/.bin/_mocha \
 		-- -u exports \
@@ -64,13 +64,13 @@ test-cov cov: install init-database
 		$(TESTS)
 
 test-cov-sqlite:
-	@$(MAKE) test-cov DB=sqlite
+	@$(MAKE) test-cov @DB=sqlite
 
 test-cov-mysql: init-mysql
-	@$(MAKE) test-cov DB=mysql
+	@$(MAKE) test-cov @DB=mysql
 
 test-travis: install init-database
-	@NODE_ENV=test DB=${DB} CNPM_SOURCE_NPM=https://registry.npmjs.org CNPM_SOURCE_NPM_ISCNPM=false \
+	@NODE_ENV=test CNPM_SOURCE_NPM=https://registry.npmjs.org CNPM_SOURCE_NPM_ISCNPM=false \
 		node --harmony \
 		node_modules/.bin/istanbul cover --preserve-comments \
 		node_modules/.bin/_mocha \
@@ -86,13 +86,13 @@ test-travis: install init-database
 		$(TESTS)
 
 test-travis-sqlite:
-	@$(MAKE) test-travis DB=sqlite
+	@$(MAKE) test-travis @DB=sqlite
 
 test-travis-mysql:
-	@$(MAKE) test-travis DB=mysql
+	@$(MAKE) test-travis @DB=mysql
 
 test-travis-postgres:
-	@$(MAKE) test-travis DB=postgres
+	@$(MAKE) test-travis @DB=postgres
 
 test-travis-all: test-travis-sqlite test-travis-mysql test-travis-postgres
 
