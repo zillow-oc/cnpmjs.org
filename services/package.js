@@ -260,9 +260,7 @@ exports.saveModule = function* (mod) {
   // dist.shasum = '';
   // dist.size = 0;
   var publish_time = new Date(mod.publish_time || Date.now());
-  console.log('item:', models);
   var item = yield* Module.findByNameAndVersion(mod.name, mod.version);
-  console.log('item:', item);
   if (!item) {
     item = Module.build({
       name: mod.name,

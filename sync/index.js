@@ -36,11 +36,11 @@ case 'exist':
 }
 
 if (!sync && config.enableCluster) {
-  console.log('[%s] [sync_worker:%s] no need to sync, exit now', Date(), process.pid);
+  debug('[%s] [sync_worker:%s] no need to sync, exit now', Date(), process.pid);
   process.exit(0);
 }
 
-console.log('[%s] [sync_worker:%s] syncing with %s mode',
+debug('[%s] [sync_worker:%s] syncing with %s mode',
   Date(), process.pid, config.syncModel);
 
 //set sync_status = 0 at first
