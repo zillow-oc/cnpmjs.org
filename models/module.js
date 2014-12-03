@@ -101,9 +101,10 @@ module.exports = function (sequelize, DataTypes) {
     ],
     classMethods: {
       findByNameAndVersion: function* (name, version) {
+        console.log('name', name, ' version:', version);
         return yield this.find({
           where: { name: name, version: version }
-        });
+        }).error(function(err){console.error(err);});
       }
     }
   });

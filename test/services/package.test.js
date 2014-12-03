@@ -24,7 +24,7 @@ describe('services/package.test.js', function () {
     var sourcePackage = {
       version: version,
       name: name,
-      publish_time: Date.now(),
+      publish_time: new Date(Date.now()),
     };
     var mod = {
       version: sourcePackage.version,
@@ -39,7 +39,9 @@ describe('services/package.test.js', function () {
       size: 100,
     };
     mod.package.dist = dist;
+      console.log('dang',mod);
     yield* Package.saveModule(mod);
+      console.log('dang2');
     // add tag
     yield* Package.addModuleTag(name, tag || 'latest', version);
     return yield* Package.getModule(mod.name, mod.version);
@@ -47,8 +49,11 @@ describe('services/package.test.js', function () {
 
   describe('addModuleTag()', function () {
     it('should add latest tag to 1.0.0', function* () {
+      console.log('dang');
       var r = yield* createModule('test-addModuleTag-module-name', '1.0.0');
+      console.log('r', r);
       var tag = yield* Package.addModuleTag(r.name, 'latest', r.version);
+      console.log(r);
       should.exist(tag);
       tag.id.should.above(0);
 

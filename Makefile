@@ -24,7 +24,7 @@ init-mysql:
 
 init-postgres:
 	@dropdb cnpmjs_test;
-	@createdb -U root cnpmjs_test; 
+	@createdb -U postgres cnpmjs_test; 
 
 test: install init-database
 	@NODE_ENV=test node_modules/.bin/mocha \

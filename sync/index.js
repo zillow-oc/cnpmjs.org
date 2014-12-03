@@ -72,9 +72,9 @@ var handleSync = co(function* () {
     } catch (err) {
       error = err;
       error.message += ' (sync package error)';
-      logger.syncError(error);
+      console.error(error);
     }
-    data && logger.syncInfo(data);
+    data && console.info(data);
     if (!config.debug) {
       sendMailToAdmin(error, data, new Date());
     }
@@ -97,7 +97,7 @@ var syncDist = co(function* () {
     return;
   }
   syncingDist = true;
-  logger.syncInfo('Start syncing dist...');
+  console.info('Start syncing dist...');
   var distSyncer = new DistSyncer({
     disturl: config.disturl
   });
@@ -106,7 +106,7 @@ var syncDist = co(function* () {
     yield* distSyncer.syncPhantomjsDir();
   } catch (err) {
     err.message += ' (sync dist error)';
-    logger.syncError(err);
+    console.error(err);
     if (config.noticeSyncDistError) {
       sendMailToAdmin(err, null, new Date());
     }
@@ -118,7 +118,7 @@ if (config.syncDist) {
   syncDist();
   setInterval(syncDist, syncInterval);
 } else {
-  logger.syncInfo('sync dist disable');
+  console.info('sync dist disable');
 }
 
 /**
@@ -131,7 +131,7 @@ var syncPythonDist = co(function* () {
     return;
   }
   syncingPythonDist = true;
-  logger.syncInfo('Start syncing python dist...');
+  console.info('Start syncing python dist...');
   var distSyncer = new DistSyncer({
     disturl: config.pythonDisturl
   });
@@ -139,7 +139,7 @@ var syncPythonDist = co(function* () {
     yield* distSyncer.start();
   } catch (err) {
     err.message += ' (sync python dist error)';
-    logger.syncError(err);
+    console.error(err);
     if (config.noticeSyncDistError) {
       sendMailToAdmin(err, null, new Date());
     }
@@ -151,7 +151,7 @@ if (config.syncPythonDist) {
   syncPythonDist();
   setInterval(syncPythonDist, syncInterval);
 } else {
-  logger.syncInfo('sync python dist disable');
+  console.info('sync python dist disable');
 }
 
 /**
@@ -164,7 +164,7 @@ var syncPopular = co(function* syncPopular() {
     return;
   }
   syncingPopular = true;
-  logger.syncInfo('Start syncing popular modules...');
+  console.info('Start syncing popular modules...');
   var data;
   var error;
   try {
@@ -172,11 +172,11 @@ var syncPopular = co(function* syncPopular() {
   } catch (err) {
     error = err;
     error.message += ' (sync package error)';
-    logger.syncError(error);
+    console.error(error);
   }
 
   if (data) {
-    logger.syncInfo(data);
+    console.info(data);
   }
   if (!config.debug) {
     sendMailToAdmin(error, data, new Date());
@@ -189,7 +189,7 @@ if (config.syncPopular) {
   syncPopular();
   setInterval(syncPopular, ms(config.syncPopularInterval));
 } else {
-  logger.syncInfo('sync popular module disable');
+  console.info('sync popular module disable');
 }
 
 function sendMailToAdmin(err, result, syncTime) {
@@ -223,7 +223,7 @@ function sendMailToAdmin(err, result, syncTime) {
       syncTime, result.successes.length, result.successes.slice(0, 10));
   }
   debug('send email with type: %s, subject: %s, html: %s', type, subject, html);
-  logger.syncInfo('send email with type: %s, subject: %s, html: %s', type, subject, html);
+  console.info('send email with type: %s, subject: %s, html: %s', type, subject, html);
   if (type && type !== 'log') {
     mail[type](to, subject, html, function (err) {
       if (err) {

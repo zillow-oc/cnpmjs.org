@@ -259,8 +259,10 @@ exports.saveModule = function* (mod) {
   // dist.tarball = '';
   // dist.shasum = '';
   // dist.size = 0;
-  var publish_time = mod.publish_time || Date.now();
+  var publish_time = new Date(mod.publish_time || Date.now());
+  console.log('item:', models);
   var item = yield* Module.findByNameAndVersion(mod.name, mod.version);
+  console.log('item:', item);
   if (!item) {
     item = Module.build({
       name: mod.name,
@@ -275,7 +277,6 @@ exports.saveModule = function* (mod) {
   item.dist_shasum = dist.shasum;
   item.dist_size = dist.size;
   item.description = description;
-
   var newItem = yield item.save();
   var result = {
     id: newItem.id,
