@@ -1,4 +1,26 @@
 
+2.0.0-rc.2 / 2014-12-11
+==================
+
+ * add download API, closes #529
+ * fix missing home page title (@rockdai)
+ * Fix typo in view/web/package.html (@LoicMahieu)
+
+2.0.0-rc.1 / 2014-12-09
+==================
+
+ * fix xss on title
+ * feat(badge): support badge image url with tag
+
+2.0.0-beta5 / 2014-12-05
+==================
+
+ * hotfix package.html typo. Closes #521
+ * Add editorconfig
+ * fix(web/package): package name to long cause style problem fix
+ * fix(css): use github-markdown-css for markdown body
+ * feat(mock): use koa-mock for front end dev
+
 2.0.0-beta4 / 2014-11-21
 ==================
 
