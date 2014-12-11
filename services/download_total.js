@@ -42,6 +42,7 @@ exports.plusModuleTotal = function* (data) {
       name: data.name
     });
   }
+  console.info('Row:', row.count, 'Data:', data.count, 'Sum:', +row.count + +data.count);
   row.count = +row.count + +data.count;
   return yield row.save();
 };
