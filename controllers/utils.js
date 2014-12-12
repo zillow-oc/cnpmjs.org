@@ -76,25 +76,25 @@ exports.getDownloadTotal = function* (name) {
   };
 
   for (var i = 0; i < rows.length; i++) {
-    var r = rows[i];
+    var r = +rows[i];
     if (r.date === end) {
-      download.today += r.count;
+      download.today += +r.count;
     }
     if (r.date >= thismonthStart) {
-      download.thismonth += r.count;
+      download.thismonth += +r.count;
     }
     if (r.date >= thisweekStart) {
-      download.thisweek += r.count;
+      download.thisweek += +r.count;
     }
 
     if (r.date === lastday) {
-      download.lastday += r.count;
+      download.lastday += +r.count;
     }
     if (r.date >= lastweekStart && r.date <= lastweekEnd) {
-      download.lastweek += r.count;
+      download.lastweek += +r.count;
     }
     if (r.date >= start && r.date <= lastmonthEnd) {
-      download.lastmonth += r.count;
+      download.lastmonth += +r.count;
     }
   }
   return download;

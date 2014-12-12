@@ -30,11 +30,11 @@ CREATE TABLE IF NOT EXISTS `module_keyword` (
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('ModuleKeyword', {
     keyword: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'module name',
     },

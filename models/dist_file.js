@@ -34,34 +34,34 @@ CREATE TABLE IF NOT EXISTS `dist_file` (
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('DistFile', {
     name: {
-      type: DataTypes.STRING(200),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'dir name',
     },
     parent: {
-      type: DataTypes.STRING(200),
+      type: DataTypes.STRING,
       allowNull: false,
       defaultValue: '/',
       comment: 'parent dir',
     },
     date: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: '02-May-2014 01:06'
     },
     size: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
       comment: 'file size'
     },
     sha1: {
-      type: DataTypes.STRING(40),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'sha1 hex value'
     },
     url: {
-      type: DataTypes.STRING(2048),
+      type: DataTypes.STRING,
       allowNull: false
     }
   }, {

@@ -30,12 +30,12 @@ CREATE TABLE IF NOT EXISTS `module_log` (
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('ModuleLog', {
     username: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'user name'
     },
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'module name',
     },

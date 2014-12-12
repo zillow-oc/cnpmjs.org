@@ -29,12 +29,12 @@ CREATE TABLE IF NOT EXISTS `module_star` (
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('ModuleStar', {
     user: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'user name'
     },
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'module name',
     }

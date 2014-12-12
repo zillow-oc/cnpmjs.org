@@ -32,17 +32,17 @@ CREATE TABLE IF NOT EXISTS `tag` (
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('Tag', {
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'module name',
     },
     tag: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'tag name',
     },
     version: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'module version',
     },

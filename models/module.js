@@ -53,7 +53,7 @@ module.exports = function (sequelize, DataTypes) {
       comment: 'module name'
     },
     version: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'module version'
     },
@@ -65,11 +65,11 @@ module.exports = function (sequelize, DataTypes) {
       comment: 'package.json',
     },
     dist_shasum: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: true,
     },
     dist_tarball: {
-      type: DataTypes.STRING(2048),
+      type: DataTypes.STRING,
       allowNull: true,
     },
     dist_size: {

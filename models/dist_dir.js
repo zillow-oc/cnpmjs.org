@@ -31,18 +31,18 @@ CREATE TABLE IF NOT EXISTS `dist_dir` (
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('DistDir', {
     name: {
-      type: DataTypes.STRING(200),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'dir name',
     },
     parent: {
-      type: DataTypes.STRING(200),
+      type: DataTypes.STRING,
       allowNull: false,
       defaultValue: '/',
       comment: 'parent dir',
     },
     date: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: '02-May-2014 01:06'
     }

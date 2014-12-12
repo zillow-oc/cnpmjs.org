@@ -29,13 +29,13 @@ CREATE TABLE IF NOT EXISTS `module_deps` (
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('ModuleDependency', {
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'module name',
     },
     dependent: {
       field: 'deps',
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       comment: '`name` is depended by `deps`. `deps` == depend => `name`'
     }
   }, {

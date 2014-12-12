@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `module_unpublished` (
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('ModuleUnpublished', {
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'module name',
     },

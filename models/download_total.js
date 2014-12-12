@@ -28,12 +28,12 @@
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('DownloadTotal', {
     date: {
-      type: DataTypes.STRING(10),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'YYYY-MM-DD format',
     },
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'module name',
     },

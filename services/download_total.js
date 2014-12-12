@@ -37,13 +37,17 @@ exports.plusModuleTotal = function* (data) {
     }
   });
   if (!row) {
-    row = DownloadTotal.build({
+    row = yield DownloadTotal.create({
       date: data.date,
       name: data.name
     });
   }
-  console.info('Row:', row.count, 'Data:', data.count, 'Sum:', +row.count + +data.count);
-  row.count = +row.count + +data.count;
+  var total = +row.count + +data.count;
+  return yield row.updateAttributes({
+    count: total
+  })
+  console.info('Row:', row.count, 'Data:', data.count, 'Sum:', total);
+  //row.count = +row.count + +data.count;
   return yield row.save();
 };
 

@@ -29,12 +29,12 @@ CREATE TABLE IF NOT EXISTS `npm_module_maintainer` (
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('NpmModuleMaintainer', {
     user: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'user name'
     },
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: false,
       comment: 'module name',
     }
