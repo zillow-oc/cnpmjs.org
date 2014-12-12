@@ -76,7 +76,7 @@ exports.getDownloadTotal = function* (name) {
   };
 
   for (var i = 0; i < rows.length; i++) {
-    var r = +rows[i];
+    var r = rows[i];
     if (r.date === end) {
       download.today += +r.count;
     }
