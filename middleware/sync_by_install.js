@@ -22,8 +22,7 @@ var config = require('../config');
 
 module.exports = function* syncByInstall(next) {
   this.allowSync = false;
-  if (!config.syncByInstall || !config.enablePrivate) {
-    // only config.enablePrivate should enable sync on install
+  if (!config.syncByInstall) {
     return yield* next;
   }
   // request not by node, consider it request from web
